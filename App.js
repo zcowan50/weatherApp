@@ -5,9 +5,21 @@ import * as Location from 'expo-location';
 import WeatherInfo from './components/WeatherInfo';
 import UnitsPicker from './components/UnitsPicker';
 import {colors} from './utils/index'
+import {darkColors} from './utils/index'
 import RefreshButton from './components/RefreshButton';
 import WeatherDetails from './components/WeatherDetails';
 import {WEATHER_API_KEY} from 'react-native-dotenv';
+import {theme} from './utils/index';
+
+var colorSet
+
+if (theme.status == 'dark') {
+  colorSet = darkColors
+
+}
+else{
+  colorSet = colors
+}
 
 
 
@@ -19,6 +31,11 @@ export default function App() {
   const [currentWeather, setCurrentWeather] = useState(null)
   const [unitSystem, setUnitSystem] = useState('imperial')
   // const [darkMode, setDarkMode] = useState(true)
+
+  
+
+  
+
 
   useEffect(() => {
     load()
@@ -61,7 +78,7 @@ export default function App() {
       <View style={styles.container}>
         <StatusBar style="auto" />
         <View style={styles.main}>
-          <UnitsPicker unitSystem={unitSystem} setUnitSystem={setUnitSystem} />
+          <UnitsPicker unitSystem={unitSystem} setUnitSystem={setUnitSystem}  />
           <RefreshButton load={load}/>
           <WeatherInfo currentWeather={currentWeather} />
         </View>
@@ -81,7 +98,7 @@ export default function App() {
   else {
     return(
     <View style={styles.container}>
-        <ActivityIndicator size="large" color={colors.PRIMARY_COLOR} />
+        <ActivityIndicator size="large" color={colorSet.PRIMARY_COLOR} />
         <StatusBar style="auto" />
     </View>
     )
@@ -91,7 +108,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.BACKGROUND_COLOR,
+    backgroundColor: colorSet.BACKGROUND_COLOR,
     justifyContent: 'center',
   },
   main : {

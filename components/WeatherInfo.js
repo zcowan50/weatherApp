@@ -1,8 +1,17 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native'
-import {colors} from '../utils/index'
+import {colors, darkColors, theme} from '../utils/index'
 
-const {PRIMARY_COLOR, SECONDARY_COLOR} = colors
+// const {PRIMARY_COLOR, SECONDARY_COLOR} = colors
+
+var colorSet 
+
+    if(theme.status == 'dark'){
+        colorSet = darkColors
+    }
+    else {
+        colorSet = colors
+    }
 
 export default function WeatherInfo({currentWeather}) {
     const {
@@ -38,20 +47,20 @@ const styles = StyleSheet.create({
     },
     weatherDescription: {
         textTransform: 'capitalize',
-        color: colors.TEXT_COLOR
+        color: colorSet.TEXT_COLOR
     },
     textPrimary: {
         fontSize: 40,
-        color: PRIMARY_COLOR
+        color: colorSet.PRIMARY_COLOR
     },
     textSecondary: {
         fontSize: 20,
-        color: SECONDARY_COLOR,
+        color: colorSet.SECONDARY_COLOR,
         fontWeight: '500',
         marginTop: 10
     },
     nameText:{
-        color: colors.TEXT_COLOR,
+        color: colorSet.TEXT_COLOR,
         fontSize: 18
     },
 })

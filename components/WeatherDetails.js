@@ -1,10 +1,23 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import {colors} from '../utils/index'
+import {colors, darkColors} from '../utils/index'
 import {FontAwesome5, MaterialCommunityIcons} from '@expo/vector-icons';
+import {theme} from '../utils/index';
 
 
-const {PRIMARY_COLOR, SECONDARY_COLOR, BORDER_COLOR, TEXT_COLOR} = colors
+
+    // const {PRIMARY_COLOR, SECONDARY_COLOR, BORDER_COLOR, TEXT_COLOR} = darkColors
+
+    // const {PRIMARY_COLOR, SECONDARY_COLOR, BORDER_COLOR, TEXT_COLOR} = colors
+
+    var colorSet 
+
+    if(theme.status == 'dark'){
+        colorSet = darkColors
+    }
+    else {
+        colorSet = colors
+    }
 
 export default function WeatherDetails({currentWeather, unitSystem}) {
     const {
@@ -17,9 +30,9 @@ export default function WeatherDetails({currentWeather, unitSystem}) {
     return (
         <View style={styles.weatherDetails}>
             <View style={styles.weatherDetailsRow}>
-                <View style={{... styles.weatherDetailsBox, borderRightWidth: 1, borderRightColor: BORDER_COLOR} }>
+                <View style={{... styles.weatherDetailsBox, borderRightWidth: 1, borderRightColor: colorSet.BORDER_COLOR} }>
                     <View style={styles.weatherDetailsRow}>
-                        <FontAwesome5 name="temperature-low" size={25} color={PRIMARY_COLOR} />
+                        <FontAwesome5 name="temperature-low" size={25} color={colorSet.PRIMARY_COLOR} />
                         <View style={styles.weatherDetailsItems}>
                             <Text style={styles.text}>Feels Like:</Text>
                             <Text style={styles.textSecondary}>{Math.round(feels_like)}°</Text>
@@ -28,7 +41,7 @@ export default function WeatherDetails({currentWeather, unitSystem}) {
                 </View>
                 <View style={styles.weatherDetailsBox}>
                 <View style={styles.weatherDetailsRow}>
-                        <MaterialCommunityIcons name="water" size={30} color={PRIMARY_COLOR} />
+                        <MaterialCommunityIcons name="water" size={30} color={colorSet.PRIMARY_COLOR} />
                         <View style={styles.weatherDetailsItems}>
                             <Text style={styles.text}>Humidity:</Text>
                             <Text style={styles.textSecondary}>{humidity}%</Text>
@@ -36,10 +49,10 @@ export default function WeatherDetails({currentWeather, unitSystem}) {
                     </View>
                 </View>
             </View>
-            <View style={{ ... styles.weatherDetailsRow, borderTopWidth: 1, borderTopColor: BORDER_COLOR}}>
-                <View style={{... styles.weatherDetailsBox, borderRightWidth: 1, borderRightColor: BORDER_COLOR} }>
+            <View style={{ ... styles.weatherDetailsRow, borderTopWidth: 1, borderTopColor: colorSet.BORDER_COLOR}}>
+                <View style={{... styles.weatherDetailsBox, borderRightWidth: 1, borderRightColor: colorSet.BORDER_COLOR} }>
                     <View style={styles.weatherDetailsRow}>
-                        <MaterialCommunityIcons name="weather-windy" size={30} color={PRIMARY_COLOR} />
+                        <MaterialCommunityIcons name="weather-windy" size={30} color={colorSet.PRIMARY_COLOR} />
                         <View style={styles.weatherDetailsItems}>
                             <Text style={styles.text}>Wind Speed:</Text>
                             <Text style={styles.textSecondary}>{windSpeed}</Text>
@@ -48,7 +61,7 @@ export default function WeatherDetails({currentWeather, unitSystem}) {
                 </View>
                 <View style={styles.weatherDetailsBox}>
                 <View style={styles.weatherDetailsRow}>
-                        <MaterialCommunityIcons name="speedometer" size={30} color={PRIMARY_COLOR} />
+                        <MaterialCommunityIcons name="speedometer" size={30} color={colorSet.PRIMARY_COLOR} />
                         <View style={styles.weatherDetailsItems}>
                             <Text style={styles.text}>Pressure:</Text>
                             <Text style={styles.textSecondary}>{pressure} hPa</Text>
@@ -66,7 +79,7 @@ const styles = StyleSheet.create({
         marginBottom: 40,
         margin: 15,
         borderWidth: 1,
-        borderColor: BORDER_COLOR,
+        borderColor: colorSet.BORDER_COLOR,
         borderRadius: 10,
     },
     weatherDetailsRow: {
@@ -84,12 +97,12 @@ const styles = StyleSheet.create({
     },
     textSecondary: {
         fontSize: 15,
-        color: SECONDARY_COLOR,
+        color: colorSet.SECONDARY_COLOR,
         fontWeight: '700',
         margin: 7
     },
     text:{
-        color: TEXT_COLOR
+        color: colorSet.TEXT_COLOR
     }
 
 })
