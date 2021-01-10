@@ -18,6 +18,7 @@ export default function App() {
   const [errorMessage, setErrorMessage] = useState(null)
   const [currentWeather, setCurrentWeather] = useState(null)
   const [unitSystem, setUnitSystem] = useState('imperial')
+  // const [darkMode, setDarkMode] = useState(true)
 
   useEffect(() => {
     load()
@@ -90,7 +91,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.BACKGROUND_COLOR,
     justifyContent: 'center',
   },
   main : {
