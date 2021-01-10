@@ -9,7 +9,8 @@ export const colors = {
         TEXT_COLOR: '#b4afba'
     
     
-
+    // Dark mode colors:
+    
     // PRIMARY_COLOR: '#6884de',
     // SECONDARY_COLOR: '#002651',
     // BORDER_COLOR: '#dbdbdb',
