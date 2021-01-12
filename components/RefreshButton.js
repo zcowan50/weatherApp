@@ -1,19 +1,22 @@
 import React from 'react'
 import { View, Text, Button, StyleSheet, Platform } from 'react-native'
 import {Ionicons} from '@expo/vector-icons';
-import {colors, theme, darkColors} from '../utils/index';
+import {theme} from '../utils/index';
 
-var colorSet 
 
-    if(theme.status == 'dark'){
-        colorSet = darkColors
-    }
-    else {
-        colorSet = colors
-    }
-
-export default function RefreshButton({load}) {
+export default function RefreshButton({load, darkMode}) {
     const refreshIconName = Platform.OS == 'ios' ? 'ios-refresh' : 'md-refresh'  
+    
+    var colorSet 
+    
+        if(darkMode == true){
+            colorSet = theme.darkColors
+        }
+        else if(darkMode == false ) {
+            colorSet = theme.lightColors
+        }
+    
+
     return (
         <View style={styles.refreshButton}>
             <Ionicons onPress={load}  name="refresh-circle-outline" size={24} color={colorSet.PRIMARY_COLOR} />

@@ -4,16 +4,17 @@ import {colors, darkColors, theme} from '../utils/index'
 
 // const {PRIMARY_COLOR, SECONDARY_COLOR} = colors
 
-var colorSet 
 
-    if(theme.status == 'dark'){
-        colorSet = darkColors
-    }
-    else {
-        colorSet = colors
-    }
+export default function WeatherInfo({currentWeather, darkMode}) {
 
-export default function WeatherInfo({currentWeather}) {
+    var colorSet 
+    
+    if(darkMode == true){
+        colorSet = theme.darkColors
+    }
+    else if(darkMode == false ) {
+        colorSet = theme.lightColors
+    }
     const {
         main: {temp},
         weather: [details],
@@ -23,6 +24,34 @@ export default function WeatherInfo({currentWeather}) {
     const {icon, main, description} = details
 
     const iconUrl = `https://openweathermap.org/img/wn/${icon}@4x.png`
+
+    const styles = StyleSheet.create({
+        weatherInfo: {
+            alignItems: 'center',
+        },
+        weatherIcon: {
+            width: 100,
+            height: 100
+        },
+        weatherDescription: {
+            textTransform: 'capitalize',
+            color: colorSet.TEXT_COLOR
+        },
+        textPrimary: {
+            fontSize: 40,
+            color: colorSet.PRIMARY_COLOR
+        },
+        textSecondary: {
+            fontSize: 20,
+            color: colorSet.SECONDARY_COLOR,
+            fontWeight: '500',
+            marginTop: 10
+        },
+        nameText:{
+            color: colorSet.TEXT_COLOR,
+            fontSize: 22
+        },
+    })
 
     return (
         <View style={styles.weatherInfo}>
@@ -36,31 +65,3 @@ export default function WeatherInfo({currentWeather}) {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    weatherInfo: {
-        alignItems: 'center',
-    },
-    weatherIcon: {
-        width: 100,
-        height: 100
-    },
-    weatherDescription: {
-        textTransform: 'capitalize',
-        color: colorSet.TEXT_COLOR
-    },
-    textPrimary: {
-        fontSize: 40,
-        color: colorSet.PRIMARY_COLOR
-    },
-    textSecondary: {
-        fontSize: 20,
-        color: colorSet.SECONDARY_COLOR,
-        fontWeight: '500',
-        marginTop: 10
-    },
-    nameText:{
-        color: colorSet.TEXT_COLOR,
-        fontSize: 18
-    },
-})

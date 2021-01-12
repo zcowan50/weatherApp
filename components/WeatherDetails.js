@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import {colors, darkColors} from '../utils/index'
 import {FontAwesome5, MaterialCommunityIcons} from '@expo/vector-icons';
 import {theme} from '../utils/index';
 
@@ -10,22 +9,59 @@ import {theme} from '../utils/index';
 
     // const {PRIMARY_COLOR, SECONDARY_COLOR, BORDER_COLOR, TEXT_COLOR} = colors
 
-    var colorSet 
+    
+    export default function WeatherDetails({currentWeather, unitSystem, darkMode}) {
 
-    if(theme.status == 'dark'){
-        colorSet = darkColors
-    }
-    else {
-        colorSet = colors
-    }
+        var colorSet 
+    
+        if(darkMode == true){
+            colorSet = theme.darkColors
+        }
+        else if(darkMode == false ) {
+            colorSet = theme.lightColors
+        }
 
-export default function WeatherDetails({currentWeather, unitSystem}) {
     const {
         main: {feels_like, humidity, pressure},
         wind: {speed}
     } = currentWeather
 
     const windSpeed = unitSystem == 'metric' ? `${Math.round(speed)} m/s ` : `${Math.round(speed)} mph`
+    
+    const styles = StyleSheet.create({
+        weatherDetails: {
+            marginTop: 'auto',
+            marginBottom: 40,
+            margin: 15,
+            borderWidth: 1,
+            borderColor: colorSet.BORDER_COLOR,
+            borderRadius: 10,
+        },
+        weatherDetailsRow: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+        },
+        weatherDetailsBox: {
+            flex: 1,
+            padding: 20
+        },
+        weatherDetailsItems: {
+            alignItems: 'flex-end',
+            justifyContent: 'flex-end'
+        },
+        textSecondary: {
+            fontSize: 15,
+            color: colorSet.SECONDARY_COLOR,
+            fontWeight: '700',
+            margin: 7
+        },
+        text:{
+            color: colorSet.TEXT_COLOR
+        }
+    
+    })
+
 
     return (
         <View style={styles.weatherDetails}>
@@ -73,36 +109,3 @@ export default function WeatherDetails({currentWeather, unitSystem}) {
     )
 }
 
-const styles = StyleSheet.create({
-    weatherDetails: {
-        marginTop: 'auto',
-        marginBottom: 40,
-        margin: 15,
-        borderWidth: 1,
-        borderColor: colorSet.BORDER_COLOR,
-        borderRadius: 10,
-    },
-    weatherDetailsRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between'
-    },
-    weatherDetailsBox: {
-        flex: 1,
-        padding: 20
-    },
-    weatherDetailsItems: {
-        alignItems: 'flex-end',
-        justifyContent: 'flex-end'
-    },
-    textSecondary: {
-        fontSize: 15,
-        color: colorSet.SECONDARY_COLOR,
-        fontWeight: '700',
-        margin: 7
-    },
-    text:{
-        color: colorSet.TEXT_COLOR
-    }
-
-})

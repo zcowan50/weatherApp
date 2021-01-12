@@ -4,22 +4,21 @@ import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import * as Location from 'expo-location';
 import WeatherInfo from './components/WeatherInfo';
 import UnitsPicker from './components/UnitsPicker';
-import {colors} from './utils/index'
-import {darkColors} from './utils/index'
 import RefreshButton from './components/RefreshButton';
 import WeatherDetails from './components/WeatherDetails';
 import {WEATHER_API_KEY} from 'react-native-dotenv';
 import {theme} from './utils/index';
+import ThemeButton from './components/ThemeButton';
 
-var colorSet
+var colorSet = theme.lightColors
 
-if (theme.status == 'dark') {
-  colorSet = darkColors
+// if (darkMode == true) {
+//   colorSet = theme.darkColors
 
-}
-else{
-  colorSet = colors
-}
+// }
+// else{
+//   colorSet = theme.lightColors
+// }
 
 
 
@@ -30,9 +29,18 @@ export default function App() {
   const [errorMessage, setErrorMessage] = useState(null)
   const [currentWeather, setCurrentWeather] = useState(null)
   const [unitSystem, setUnitSystem] = useState('imperial')
-  // const [darkMode, setDarkMode] = useState(true)
+  const [darkMode, setDarkMode] = useState(false)
 
-  
+  const changeTheme = () => {
+    if(darkMode == false){
+      setDarkMode(true)
+      colorSet = theme.darkColors
+    }
+    else if(darkMode == true){
+      setDarkMode(false)
+      colorSet = theme.lightColors
+    }
+  }
 
   
 
@@ -72,18 +80,31 @@ export default function App() {
       setErrorMessage(error.message)
     }
   }
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colorSet.BACKGROUND_COLOR,
+      justifyContent: 'center',
+    },
+    main : {
+      justifyContent: 'center',
+      flex: 1
+    },
+    
+  });
 
   if(currentWeather) {
     return (
       <View style={styles.container}>
         <StatusBar style="auto" />
         <View style={styles.main}>
-          <UnitsPicker unitSystem={unitSystem} setUnitSystem={setUnitSystem}  />
-          <RefreshButton load={load}/>
-          <WeatherInfo currentWeather={currentWeather} />
+          <UnitsPicker unitSystem={unitSystem} setUnitSystem={setUnitSystem} darkMode={darkMode}  />
+          <RefreshButton load={load} darkMode={darkMode}/>
+          <WeatherInfo currentWeather={currentWeather} darkMode={darkMode}/>
         </View>
-        <WeatherDetails currentWeather={currentWeather} unitSystem={unitSystem} />
-    </View>
+          <ThemeButton changeTheme={changeTheme} darkMode={darkMode} colorSet={colorSet}/>
+        <WeatherDetails currentWeather={currentWeather} unitSystem={unitSystem} darkMode={darkMode} />
+      </View>
   );
   }
   else if (errorMessage){
@@ -105,15 +126,3 @@ export default function App() {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colorSet.BACKGROUND_COLOR,
-    justifyContent: 'center',
-  },
-  main : {
-    justifyContent: 'center',
-    flex: 1
-  },
-  
-});
