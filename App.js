@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator, TextInput, Button } from 'react-native';
 import * as Location from 'expo-location';
 import WeatherInfo from './components/WeatherInfo';
 import UnitsPicker from './components/UnitsPicker';
@@ -42,6 +42,30 @@ export default function App() {
     }
   }
 
+  // Creating another function to get weather if user does not allow location 
+  async function loadWithCity(){
+    var cityName 
+    const cityBasedWeatherUrl = `${BASE_WEATHER_URL}=${cityName}&appid=${WEATHER_API_KEY}`
+
+    try {
+
+      const response = await fetch(cityBasedWeatherUrl)
+
+      const result = await response.json()
+
+      if(response.ok) {
+        setCurrentWeather(result)
+      }
+      else {
+        setErrorMessage(result.message)
+      }
+
+      // alert(`Latitude: ${latitude}, Longitude: ${longitude}`)
+      }catch (error) {
+        setErrorMessage(error.message)
+      }
+  } 
+
   
 
 
@@ -55,16 +79,18 @@ export default function App() {
       let { status } = await Location.requestPermissionsAsync()
 
       if(status != 'granted') {
-        setErrorMessage('Access to location is needed to run the app')
+        setErrorMessage('Please allow access to location or enter a city')
         return 
       }
       const location = await Location.getCurrentPositionAsync()
       
       const {latitude, longitude} = location.coords
-      
-      const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitSystem}&appid=${WEATHER_API_KEY}`
 
-      const response = await fetch(weatherUrl)
+      
+      const locationBasedWeatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitSystem}&appid=${WEATHER_API_KEY}`
+      
+
+      const response = await fetch(locationBasedWeatherUrl)
 
       const result = await response.json()
 
@@ -88,7 +114,8 @@ export default function App() {
     },
     main : {
       justifyContent: 'center',
-      flex: 1
+      flex: 1,
+      marginBottom: 0
     },
     
   });
@@ -105,13 +132,18 @@ export default function App() {
           <ThemeButton changeTheme={changeTheme} darkMode={darkMode} colorSet={colorSet}/>
         <WeatherDetails currentWeather={currentWeather} unitSystem={unitSystem} darkMode={darkMode} />
       </View>
-  );
+    );
   }
   else if (errorMessage){
     return (
       <View style={styles.container}>
         <RefreshButton load={load}/>
         <Text style={{textAlign: 'center'}}>{errorMessage}</Text>
+        <TextInput
+          style={{ height: 40, borderColor: 'gray', borderWidth: 1, }}
+          value={cityName}
+        />
+        <Button title='GO'/>
         <StatusBar style="auto" />
       </View>
     )

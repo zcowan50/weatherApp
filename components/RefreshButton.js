@@ -16,6 +16,9 @@ export default function RefreshButton({load, darkMode}) {
             colorSet = theme.lightColors
         }
     
+        if(colorSet == null){
+            colorSet= theme
+        }
 
     return (
         <View style={styles.refreshButton}>

@@ -45,7 +45,7 @@ export default function WeatherInfo({currentWeather, darkMode}) {
             fontSize: 20,
             color: colorSet.SECONDARY_COLOR,
             fontWeight: '500',
-            marginTop: 10
+            marginTop: 10,
         },
         nameText:{
             color: colorSet.TEXT_COLOR,

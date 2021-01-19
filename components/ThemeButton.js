@@ -32,7 +32,6 @@ const ThemeButton = ({changeTheme, darkMode, colorSet}) => {
             
 //         }
 
-console.log(colorSet)
 
 // var trackColorLt= colorSet.lightColors.BACKGROUND_COLOR
 
