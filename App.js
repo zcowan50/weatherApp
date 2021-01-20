@@ -12,17 +12,6 @@ import ThemeButton from './components/ThemeButton';
 
 var colorSet = theme.lightColors
 
-// if (darkMode == true) {
-//   colorSet = theme.darkColors
-
-// }
-// else{
-//   colorSet = theme.lightColors
-// }
-
-
-
-
 const BASE_WEATHER_URL = 'https://api.openweathermap.org/data/2.5/weather?'
 
 export default function App() {
@@ -65,8 +54,6 @@ export default function App() {
         setErrorMessage(error.message)
       }
   } 
-
-  
 
 
   useEffect(() => {
